@@ -1,34 +1,62 @@
-import {
-  getAllFilms,
-  addFilm,
-  deleteFilm,
-  updateFilm,
-  getFilmById
-} from '../models/filmModel.js';
+/**
+ * Film Controller - HTTP request/response işlemleri
+ */
+import { filmService } from '../services/index.js';
+import { sendSuccess, sendCreated, sendNoContent, sendNotFound } from '../utils/index.js';
+import { asyncHandler } from '../middleware/index.js';
 
-export function listFilms(req, res) {
-  const films = getAllFilms();
-  res.json(films);
-}
+/**
+ * Tüm filmleri listele
+ * GET /api/films
+ */
+export const listFilms = asyncHandler(async (req, res) => {
+  const films = filmService.getAll();
+  sendSuccess(res, films, 200, { count: films.length });
+});
 
-export function createFilm(req, res) {
+/**
+ * Tek film getir
+ * GET /api/films/:id
+ */
+export const getFilm = asyncHandler(async (req, res) => {
+  const film = filmService.getById(req.params.id);
+  sendSuccess(res, film);
+});
+
+/**
+ * Yeni film oluştur
+ * POST /api/films
+ */
+export const createFilm = asyncHandler(async (req, res) => {
   const { title, year } = req.body;
-  if (!title || !year) return res.status(400).json({ error: 'Eksik veri' });
-  const newFilm = addFilm(title, year);
-  res.status(201).json(newFilm);
-}
+  const newFilm = filmService.create(title, year);
+  sendCreated(res, newFilm);
+});
 
-export function removeFilm(req, res) {
-  const id = parseInt(req.params.id);
-  deleteFilm(id);
-  res.status(204).end();
-}
-
-export function editFilm(req, res) {
-  const id = parseInt(req.params.id);
+/**
+ * Film güncelle
+ * PUT /api/films/:id
+ */
+export const editFilm = asyncHandler(async (req, res) => {
   const { title, year } = req.body;
-  const film = getFilmById(id);
-  if (!film) return res.status(404).json({ error: 'Film bulunamadı' });
-  const updatedFilm = updateFilm(id, title || film.title, year || film.year);
-  res.json(updatedFilm);
-}
+  const updatedFilm = filmService.update(req.params.id, title, year);
+  sendSuccess(res, updatedFilm);
+});
+
+/**
+ * Film sil
+ * DELETE /api/films/:id
+ */
+export const removeFilm = asyncHandler(async (req, res) => {
+  filmService.delete(req.params.id);
+  sendNoContent(res);
+});
+
+/**
+ * Film istatistikleri
+ * GET /api/films/stats
+ */
+export const getStats = asyncHandler(async (req, res) => {
+  const stats = filmService.getStats();
+  sendSuccess(res, stats);
+});

@@ -15,19 +15,22 @@ Modern ve şık bir film yönetim uygulaması. Favori filmlerinizi kaydedin, dü
 - ⚡ Hızlı ve optimize edilmiş performans
 - 🔔 Anlık bildirimler
 - 📊 Film istatistikleri
+- 🏗️ Modüler ve ölçeklenebilir mimari
 
 ## 🛠️ Teknolojiler
 
 ### Frontend
-- React 19
+- React 19 (Hooks, Custom Hooks)
 - Vite 7
 - Tailwind CSS 4
 - Modern ES Modules
+- Modüler Component Yapısı
 
 ### Backend
 - Express.js 5
 - better-sqlite3
-- CORS desteği
+- MVC + Service Layer Pattern
+- Middleware tabanlı mimari
 
 ## 🚀 Kurulum
 
@@ -47,7 +50,7 @@ Modern ve şık bir film yönetim uygulaması. Favori filmlerinizi kaydedin, dü
    ```bash
    cd server
    npm install
-   npm start
+   npm run dev
    ```
    Server `http://localhost:3001` adresinde çalışacaktır.
 
@@ -63,22 +66,73 @@ Modern ve şık bir film yönetim uygulaması. Favori filmlerinizi kaydedin, dü
 
 ```
 softwarePersona/
-├── client/                 # React frontend
-│   ├── src/
-│   │   ├── api/           # API fonksiyonları
-│   │   ├── components/    # React bileşenleri
-│   │   ├── App.jsx        # Ana uygulama
-│   │   └── main.jsx       # Giriş noktası
-│   └── package.json
+├── client/                    # React Frontend
+│   └── src/
+│       ├── components/        # UI Bileşenleri
+│       │   ├── common/        # Yeniden kullanılabilir bileşenler
+│       │   │   ├── Button.jsx
+│       │   │   ├── Input.jsx
+│       │   │   ├── Card.jsx
+│       │   │   ├── Spinner.jsx
+│       │   │   ├── Notification.jsx
+│       │   │   └── EmptyState.jsx
+│       │   ├── AddFilmForm.jsx
+│       │   ├── FilmList.jsx
+│       │   ├── FilmItem.jsx
+│       │   └── StatsCard.jsx
+│       ├── hooks/             # Custom React Hooks
+│       │   ├── useFilms.js
+│       │   ├── useNotification.js
+│       │   └── useLocalStorage.js
+│       ├── layouts/           # Sayfa Layout'ları
+│       │   ├── MainLayout.jsx
+│       │   ├── Header.jsx
+│       │   └── Footer.jsx
+│       ├── services/          # API İletişim Katmanı
+│       │   └── filmService.js
+│       ├── constants/         # Sabit Değerler
+│       │   └── index.js
+│       ├── utils/             # Yardımcı Fonksiyonlar
+│       │   ├── dateUtils.js
+│       │   └── stringUtils.js
+│       ├── App.jsx            # Ana Uygulama
+│       └── main.jsx           # Giriş Noktası
 │
-├── server/                 # Express backend
-│   ├── controllers/       # İstek işleyicileri
-│   ├── models/            # Veritabanı işlemleri
-│   ├── routes/            # API rotaları
-│   ├── db.js              # Veritabanı bağlantısı
-│   └── index.js           # Sunucu giriş noktası
+├── server/                    # Express Backend
+│   ├── config/                # Yapılandırma
+│   │   └── index.js
+│   ├── controllers/           # HTTP İstek İşleyicileri
+│   │   └── filmController.js
+│   ├── middleware/            # Express Middleware'ler
+│   │   ├── errorHandler.js
+│   │   ├── validateRequest.js
+│   │   └── index.js
+│   ├── models/                # Veritabanı İşlemleri
+│   │   └── filmModel.js
+│   ├── routes/                # API Rotaları
+│   │   └── filmRoutes.js
+│   ├── services/              # İş Mantığı Katmanı
+│   │   └── filmService.js
+│   ├── utils/                 # Yardımcı Araçlar
+│   │   ├── logger.js
+│   │   ├── response.js
+│   │   └── index.js
+│   ├── db.js                  # Veritabanı Bağlantısı
+│   └── index.js               # Sunucu Giriş Noktası
 │
 └── README.md
+```
+
+## 🏗️ Mimari
+
+### Backend Katmanları
+```
+Request → Routes → Middleware → Controller → Service → Model → Database
+```
+
+### Frontend Katmanları
+```
+App → Layouts → Components → Hooks → Services → API
 ```
 
 ## 🔗 API Endpoints
@@ -86,14 +140,27 @@ softwarePersona/
 | Method | Endpoint | Açıklama |
 |--------|----------|----------|
 | GET | `/api/films` | Tüm filmleri listele |
+| GET | `/api/films/:id` | Tek film getir |
+| GET | `/api/films/stats` | İstatistikler |
 | POST | `/api/films` | Yeni film ekle |
 | PUT | `/api/films/:id` | Film güncelle |
 | DELETE | `/api/films/:id` | Film sil |
 | GET | `/api/health` | Sunucu durumu |
 
-## 🎨 Ekran Görüntüleri
+## 🧩 Yeni Özellik Ekleme
 
-Uygulama modern bir gradient tasarımı ve glassmorphism efektleri kullanmaktadır.
+### Backend'e yeni endpoint eklemek:
+1. `models/` - Veritabanı işlemi ekle
+2. `services/` - İş mantığı ekle
+3. `controllers/` - HTTP handler ekle
+4. `routes/` - Route tanımla
+5. `middleware/` - Gerekirse validasyon ekle
+
+### Frontend'e yeni özellik eklemek:
+1. `services/` - API çağrısı ekle
+2. `hooks/` - Custom hook oluştur
+3. `components/` - UI bileşeni oluştur
+4. `constants/` - Sabitler ekle
 
 ## 👤 Geliştirici
 

@@ -2,28 +2,23 @@
  * Veritabanı bağlantısı ve şema yönetimi
  */
 import Database from 'better-sqlite3';
-import config from './config/index.js';
-import { logger } from './utils/index.js';
+import 'dotenv/config';
 
-const dbPath = `${config.database.path}${config.database.name}`;
-const db = new Database(dbPath);
+const dbName = process.env.DB_NAME || 'films.db';
+const dbPath = process.env.DB_PATH || './';
+const db = new Database(`${dbPath}${dbName}`);
 
 // Tablo oluşturma
-const initializeDatabase = () => {
-  db.exec(`
-    CREATE TABLE IF NOT EXISTS films (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      title TEXT NOT NULL,
-      year INTEGER NOT NULL,
-      created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-      updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
-    )
-  `);
+db.exec(`
+  CREATE TABLE IF NOT EXISTS films (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    title TEXT NOT NULL,
+    year INTEGER NOT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+  )
+`);
 
-  logger.success('📦 Database initialized');
-};
-
-// Veritabanını başlat
-initializeDatabase();
+console.log('📦 Database initialized');
 
 export default db;
