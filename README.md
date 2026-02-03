@@ -162,6 +162,55 @@ App → Layouts → Components → Hooks → Services → API
 3. `components/` - UI bileşeni oluştur
 4. `constants/` - Sabitler ekle
 
+## 🌐 Deployment (Yayınlama)
+
+### Backend → Render.com
+
+1. [Render.com](https://render.com)'a GitHub ile giriş yapın
+2. **New +** → **Web Service** tıklayın
+3. GitHub reponuzu bağlayın
+4. Ayarları yapılandırın:
+   - **Name:** `film-koleksiyonu-api`
+   - **Root Directory:** `server`
+   - **Runtime:** `Node`
+   - **Build Command:** `npm install`
+   - **Start Command:** `npm start`
+5. **Environment Variables** ekleyin:
+   ```
+   NODE_ENV=production
+   PORT=3001
+   ```
+6. **Create Web Service** tıklayın
+7. Deploy tamamlandığında URL'yi kopyalayın (örn: `https://film-koleksiyonu-api.onrender.com`)
+
+### Frontend → Netlify
+
+1. [Netlify](https://netlify.com)'ye GitHub ile giriş yapın
+2. **Add new site** → **Import an existing project** tıklayın
+3. GitHub reponuzu seçin
+4. Build ayarlarını yapın:
+   - **Base directory:** `client`
+   - **Build command:** `npm run build`
+   - **Publish directory:** `client/dist`
+5. **Environment Variables** ekleyin:
+   ```
+   VITE_API_URL=https://film-koleksiyonu-api.onrender.com/api
+   ```
+   ⚠️ URL'yi Render'dan aldığınız gerçek URL ile değiştirin!
+6. **Deploy site** tıklayın
+
+### Deploy Sonrası Kontrol
+
+1. Render dashboard'da backend'in "Live" olduğunu kontrol edin
+2. Netlify'de sitenizi açın
+3. Filmler yükleniyorsa başarılı! 🎉
+
+### Önemli Notlar
+
+- Render ücretsiz planda 15 dakika inaktiflik sonrası uyku moduna geçer
+- İlk yüklemede backend uyanması 30-60 saniye sürebilir
+- Production'da SQLite yerine PostgreSQL kullanmak daha güvenlidir
+
 ## 👤 Geliştirici
 
 **Habil Yazıcı**
