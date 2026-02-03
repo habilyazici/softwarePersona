@@ -162,40 +162,63 @@ App → Layouts → Components → Hooks → Services → API
 3. `components/` - UI bileşeni oluştur
 4. `constants/` - Sabitler ekle
 
-## 🌐 Deployment (Yayınlama)
+## 🌐 Canlıya Alma (Deployment)
 
-### Tek Sunucuda Deploy → Render.com (Önerilen)
+Projeyi ücretsiz olarak canlıya almak için aşağıdaki adımları izleyin:
 
-Frontend ve Backend tek sunucuda çalışır!
+### 1️⃣ Backend - Render.com
 
-1. [Render.com](https://render.com)'a GitHub ile giriş yapın
-2. **New +** → **Web Service** tıklayın
-3. GitHub reponuzu bağlayın (`softwarePersona`)
-4. Ayarları yapılandırın:
-
-   | Alan | Değer |
-   |------|-------|
-   | **Name** | `film-koleksiyonu` |
-   | **Build Command** | `cd client && npm install && npm run build && cd ../server && npm install` |
-   | **Start Command** | `cd server && npm start` |
-
+1. [render.com](https://render.com)'a gidin ve GitHub ile giriş yapın
+2. **New → Web Service** seçin
+3. GitHub repo'nuzu bağlayın
+4. Ayarlar:
+   - **Name:** softwarepersona-api
+   - **Root Directory:** `server`
+   - **Runtime:** Node
+   - **Build Command:** `npm install`
+   - **Start Command:** `npm start`
 5. **Environment Variables** ekleyin:
    - `NODE_ENV` = `production`
-
+   - `PORT` = `10000`
+   - `CORS_ORIGIN` = `https://your-frontend.vercel.app` (frontend deploy edildikten sonra)
 6. **Create Web Service** tıklayın
-7. ✅ Birkaç dakika bekleyin, site hazır!
+7. Deploy tamamlandığında URL'yi kopyalayın (örn: `https://softwarepersona-api.onrender.com`)
 
-### Alternatif: Railway.app
+### 2️⃣ Frontend - Vercel
 
-1. [Railway.app](https://railway.app)'e giriş yapın
-2. **New Project** → **Deploy from GitHub**
-3. Repoyu seçin, otomatik deploy başlar
+1. [vercel.com](https://vercel.com)'a gidin ve GitHub ile giriş yapın
+2. **Add New → Project** seçin
+3. GitHub repo'nuzu import edin
+4. Ayarlar:
+   - **Root Directory:** `client`
+   - **Framework Preset:** Vite
+   - **Build Command:** `npm run build`
+   - **Output Directory:** `dist`
+5. **Environment Variables** ekleyin:
+   - `VITE_API_URL` = `https://your-backend.onrender.com/api` (Backend URL'nizi yazın)
+6. **Deploy** tıklayın
 
-### Önemli Notlar
+### 3️⃣ CORS Güncelleme
 
-- Render ücretsiz planda 15 dakika inaktiflik sonrası uyku moduna geçer
-- İlk yüklemede backend uyanması 30-60 saniye sürebilir
-- Production'da SQLite yerine PostgreSQL kullanmak daha güvenlidir
+Frontend deploy edildikten sonra, Render.com'da `CORS_ORIGIN` değişkenini Vercel URL'niz ile güncelleyin.
+
+### ⚠️ Önemli Notlar
+
+- **Render Free Tier:** 15 dakika işlem olmazsa uyku moduna geçer (ilk istek ~30 saniye sürer)
+- **SQLite Uyarısı:** Render free tier'da disk kalıcı değil, sunucu yeniden başladığında veriler silinir
+- **Kalıcı Veritabanı İçin:** [Turso](https://turso.tech) (SQLite cloud) veya [Supabase](https://supabase.com) (PostgreSQL) kullanabilirsiniz
+
+### 🔗 Alternatif Platformlar
+
+| Platform | Frontend | Backend | Veritabanı |
+|----------|----------|---------|------------|
+| Vercel | ✅ | ✅ (Serverless) | - |
+| Netlify | ✅ | ✅ (Functions) | - |
+| Render | ✅ | ✅ | PostgreSQL |
+| Railway | ✅ | ✅ | PostgreSQL, MySQL |
+| Fly.io | - | ✅ | SQLite, PostgreSQL |
+| Turso | - | - | ✅ SQLite |
+| Supabase | - | - | ✅ PostgreSQL |
 
 ## 👤 Geliştirici
 

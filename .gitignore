@@ -1,15 +1,18 @@
 # Dependencies
 node_modules/
 
-# Database
-*.db
-*.sqlite
-*.sqlite3
-
-# Environment
+# Environment files
 .env
 .env.local
 .env.production
+
+# Database
+*.db
+*.sqlite
+
+# Build outputs
+dist/
+build/
 
 # Logs
 logs/
@@ -23,5 +26,3 @@ Thumbs.db
 # IDE
 .vscode/
 .idea/
-*.swp
-*.swo
