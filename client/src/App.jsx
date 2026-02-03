@@ -45,7 +45,7 @@ function App() {
             <span aria-label="Instagram" role="img">📸</span>
           </a>
         </div>
-        <span className="text-gray-400 text-sm">Tasarım ve kod: <span className="text-pink-400 font-bold">Senin Adın</span></span>
+        <span className="text-gray-400 text-sm">Tasarım ve kod: <span className="text-pink-400 font-bold">Habil Yazıcı</span></span>
       </footer>
     </div>
   );
