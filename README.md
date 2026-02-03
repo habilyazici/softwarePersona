@@ -164,46 +164,32 @@ App → Layouts → Components → Hooks → Services → API
 
 ## 🌐 Deployment (Yayınlama)
 
-### Backend → Render.com
+### Tek Sunucuda Deploy → Render.com (Önerilen)
+
+Frontend ve Backend tek sunucuda çalışır!
 
 1. [Render.com](https://render.com)'a GitHub ile giriş yapın
 2. **New +** → **Web Service** tıklayın
-3. GitHub reponuzu bağlayın
+3. GitHub reponuzu bağlayın (`softwarePersona`)
 4. Ayarları yapılandırın:
-   - **Name:** `film-koleksiyonu-api`
-   - **Root Directory:** `server`
-   - **Runtime:** `Node`
-   - **Build Command:** `npm install`
-   - **Start Command:** `npm start`
+
+   | Alan | Değer |
+   |------|-------|
+   | **Name** | `film-koleksiyonu` |
+   | **Build Command** | `cd client && npm install && npm run build && cd ../server && npm install` |
+   | **Start Command** | `cd server && npm start` |
+
 5. **Environment Variables** ekleyin:
-   ```
-   NODE_ENV=production
-   PORT=3001
-   ```
+   - `NODE_ENV` = `production`
+
 6. **Create Web Service** tıklayın
-7. Deploy tamamlandığında URL'yi kopyalayın (örn: `https://film-koleksiyonu-api.onrender.com`)
+7. ✅ Birkaç dakika bekleyin, site hazır!
 
-### Frontend → Netlify
+### Alternatif: Railway.app
 
-1. [Netlify](https://netlify.com)'ye GitHub ile giriş yapın
-2. **Add new site** → **Import an existing project** tıklayın
-3. GitHub reponuzu seçin
-4. Build ayarlarını yapın:
-   - **Base directory:** `client`
-   - **Build command:** `npm run build`
-   - **Publish directory:** `client/dist`
-5. **Environment Variables** ekleyin:
-   ```
-   VITE_API_URL=https://film-koleksiyonu-api.onrender.com/api
-   ```
-   ⚠️ URL'yi Render'dan aldığınız gerçek URL ile değiştirin!
-6. **Deploy site** tıklayın
-
-### Deploy Sonrası Kontrol
-
-1. Render dashboard'da backend'in "Live" olduğunu kontrol edin
-2. Netlify'de sitenizi açın
-3. Filmler yükleniyorsa başarılı! 🎉
+1. [Railway.app](https://railway.app)'e giriş yapın
+2. **New Project** → **Deploy from GitHub**
+3. Repoyu seçin, otomatik deploy başlar
 
 ### Önemli Notlar
 
