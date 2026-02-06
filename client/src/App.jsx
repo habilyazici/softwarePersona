@@ -79,6 +79,11 @@ function App() {
       return (
         <div className="text-center py-8">
           <p className="text-red-400 mb-4">{error}</p>
+          <div className="text-gray-500 mb-4">
+            Şu anda <b>demo modundasınız</b>.<br />
+            Backend (API) bağlı olmadığı için film verisi yüklenemiyor.<br />
+            Sadece arayüzü test edebilirsiniz.
+          </div>
           <Button onClick={loadFilms} variant="primary">
             Tekrar Dene
           </Button>
